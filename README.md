@@ -53,7 +53,7 @@ An object can be derived from any number of existing objects by listing their co
 
 Attributes are listed before the object identifier, separated by spaces. They can be used in expressions like Boolean properties. Some are read-only.
 
-Qualifier | Meaning
+Attribute | Meaning
 ----|----
 Ubiquitous | Object is always in focus, unless hidden (e.g. inventory). 
 Prominent | Object is in focus if its parent is in focus. 
