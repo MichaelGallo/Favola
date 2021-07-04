@@ -1,4 +1,4 @@
-#Favola
+# Favola
 
 Favola is an authoring system for parserless IF, somewhere between Twine and traditional IF languages like Inform or TADS. My goal while creating Favola was to make an IF system that's as orthogonal as possible; to provide the greatest flexibility with the fewest built-in elements.
 
@@ -8,7 +8,7 @@ There are no built-in concepts of rooms, items, or compass directions. In this a
 
 
 
-##Language Syntax
+## Language Syntax
 
 	#include "FileName"
 	//comment
