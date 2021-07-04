@@ -94,8 +94,9 @@ Action hypertext can contain active elements enclosed in square brackets [].
 | Format                       | Meaning                                                      |
 | ---------------------------- | ------------------------------------------------------------ |
 | `[expression]`               | Will be replaced with the result of the expression.          |
-| `[expression->expression]`   | The result of the first expression will appear <u>underlined</u>.<br />When clicked, shifts focus to the object resulting from the second expression. |
-| `[expression^]`              | Same as above, but shifts focus to the parent.               |
+| `[expression@expression]`   | The result of the first expression will appear <u>underlined</u>.<br />When clicked, performs the action resulting from the second expression.<br />Note that the first expression is optional. If omitted, the action will be performed immediately. |
+| `[expression->expression]`   | The result of the first expression will appear <u>underlined</u>.<br />When clicked, shifts focus to the object resulting from the second expression.<br />Here the first expression is also optional. If omitted, the focus will shift to the new object immediately. |
+| `[expression^]`              | Same as above, but shifts focus to the parent object.<br />If the expression is omitted, the focus will shift to the parent object immediately. |
 | `[random:item1\|item2\|...]`   | Will be replaced with a random item from the list.           |
 | `[sequence:item1\|item2\|...]` | Will be replaced with one of the items sequentially.<br />Once the sequence is finished, the last item will be repeated. |
 | `[loop:item1\|item2\|...]`     | Same as above, but with looping back to the first item instead. |
