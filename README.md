@@ -55,10 +55,10 @@ Attributes are listed before the object identifier, separated by spaces. They ca
 
 Attribute | Meaning
 ----|----
-Ubiquitous | Object is always in focus, unless hidden (e.g. inventory). 
-Prominent | Object is in focus if its parent is in focus. 
-Hidden | Object is hidden. 
-Focused | (Read-only) The first focused object when game starts.<br />This attribute is set by the game engine as focus shifts. 
+`Ubiquitous` | Object is always in focus, unless hidden (e.g. inventory). 
+`Prominent` | Object is in focus if its parent is in focus. 
+`Hidden` | Object is hidden. 
+`Focused` | (Read-only) The first focused object when game starts.<br />This attribute is set by the game engine as focus shifts. 
 
 ### Properties
 
@@ -96,9 +96,9 @@ Action hypertext can contain active elements enclosed in square brackets [].
 | `[expression]`               | Will be replaced with the result of the expression.          |
 | `[expression->expression]`   | The result of the first expression will appear <u>underlined</u>.<br />When clicked, shifts focus to the object resulting from the second expression. |
 | `[expression^]`              | Same as above, but shifts focus to the parent.               |
-| `[random:item1|item2|...]`   | Will be replaced with a random item from the list.           |
-| `[sequence:item1|item2|...]` | Will be replaced with one of the items sequentially.<br />Once the sequence is finished, the last item will be repeated. |
-| `[loop:item1|item2|...]`     | Same as above, but with looping back to the first item instead. |
+| `[random:item1\|item2\|...]`   | Will be replaced with a random item from the list.           |
+| `[sequence:item1\|item2\|...]` | Will be replaced with one of the items sequentially.<br />Once the sequence is finished, the last item will be repeated. |
+| `[loop:item1\|item2\|...]`     | Same as above, but with looping back to the first item instead. |
 | `[chance N%:expression]`     | Has an N% chance of being replaced with the result of the expression. |
 
 These can be nested to arbitrary depth. For example, to create an element which is either one of two different expressions or nothing, write:
@@ -108,11 +108,11 @@ These can be nested to arbitrary depth. For example, to create an element which 
 
 | Escape Sequence       | Meaning                                                      |
 | --------------------- | ------------------------------------------------------------ |
-| \n                    | Forced line break (newline).                                 |
-| \p                    | Forced paragraph break.<br />Paragraph breaks are normally inserted at the start of each turn. |
-| \\>                   | Increase indent (until end of paragraph).                    |
-| \\<                   | Decrease indent (implies forced line break).                 |
-| \\any other character | That character, without any special meaning.<br />I.e. `\}` would insert a curly brace without closing the hypertext block. |
+| `\n`                    | Forced line break (newline).                                 |
+| `\p`                    | Forced paragraph break.<br />Paragraph breaks are normally inserted at the start of each turn. |
+| `\>`                   | Increase indent (until end of paragraph).                    |
+| `\<`                   | Decrease indent (implies forced line break).                 |
+| `\any other character` | That character, without any special meaning.<br />I.e. `\}` would insert a curly brace without closing the hypertext block. |
 
 
 
@@ -126,8 +126,8 @@ Code in functions has a very simple C-like syntax, with only a minimal set of ke
 
 | Keyword(s)           | Function                     |
 | -------------------- | ---------------------------- |
-| if (cond) {} else {} | Conditional execution        |
-| while (cond) {}      | Loop while condition is true |
-| break                | Break out of a loop          |
-| return exp           | Return from function         |
-| variable = exp       | Assignment                   |
+| `if (cond) {} else {}` | Conditional execution        |
+| `while (cond) {}`      | Loop while condition is true |
+| `break`                | Break out of a loop          |
+| `return exp`           | Return from function         |
+| `variable = exp`       | Assignment                   |
