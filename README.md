@@ -49,7 +49,7 @@ An object in the game can be anything, from the player character, a room, an ite
 
 An object can be derived from any number of existing objects by listing their comma-separated identifiers in the first line of the object definition, after a colon. For example `Auditorium : Location, Indoors` would create an object called `Auditorium` which inherits all attributes, child objects, actions, properties, and functions from two previously defined objects; `Location` and `Indoors`. If those two parent objects have some things in common, `Indoors` would override `Location`, as it's listed second.
 
-###Object Attributes
+### Object Attributes
 
 Attributes are listed before the object identifier, separated by spaces. They can be used in expressions like Boolean properties. Some are read-only.
 
