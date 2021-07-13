@@ -14,7 +14,7 @@ There are no built-in concepts of rooms, items, or compass directions. In this a
 	
 	#include "FileName"			//a game can have multiple source files
 	#css "MyStyleSheet.css"		//there's one style sheet per game
-	#markdown					//hypertext can be either HTML or Markdown
+	#html						//hypertext can be either Markdown (the default) or HTML
 	
 	//an object:
 	Attributes Identifier "Name" : Parent1, Parent2, ...
@@ -93,7 +93,7 @@ Attribute | Meaning
 
 ### Hypertext
 
-Action hypertext is written in HTML or Markdown, and can be styled using CSS. To switch between HTML and Markdown, use the `#html` and `#markdown` directives, which take effect until the next directive or the end of the current source file. The style sheet is common for the whole game, and is set using the `#css "MyStyles.css"` directive. If there are multiple such directives, the last one encountered takes effect.
+Action hypertext is written in Markdown (by default) or HTML, and can be styled using CSS. To switch between Markdown and HTML, use the `#markdown` and `#html` directives, which take effect until the next directive or the end of the current source file. The style sheet is common for the whole game, and is set using the `#css "MyStyles.css"` directive. If there are multiple such directives, the last one encountered takes effect.
 
 Hypertext can also contain active elements enclosed in square brackets `[]`. These evaluate expressions, create active (clickable) text, and allow you to easily introduce a bit of randomness into the game.
 
@@ -126,10 +126,32 @@ Code in functions has a very simple C-like syntax, with only a minimal set of ke
 | Keyword(s)           | Function                     |
 | -------------------- | ---------------------------- |
 | `if (cond) {} else {}` | Conditional execution        |
+| `for (var = value; cond; statement) {}` | For loop with a control variable |
+| `for (item : container) {}` | Iterate over all items of a container (see variables below) |
 | `while (cond) {}`      | Loop while condition is true |
-| `break`                | Break out of a loop          |
-| `return exp`           | Return from function         |
-| `variable = exp`       | Assignment                   |
+| `do {} while (cond)` | Loop while condition is true, but at least once |
+| `break`                | Unconditional jump out of a loop |
+| `continue` | Unconditional jump to the start of a loop |
+| `return exp`           | Return from function.<br />The return value is optional, and defaults to `""`. |
+| `variable = exp`       | Local variable declaration and initialization |
+| `static variable = exp` | Static (global) variable declaration and initialization |
+| `this` | The object owning the function.<br />Note that functions can be inherited, in which case `this` is the child object. |
+| `label:` | Define a label |
+| `goto label` | Unconditional jump to label |
+
+All variables created within functions are associative containers (maps). They hold key-value pairs. Both keys and values are variants, able to hold strings, 64-bit signed integers or double-precision floating point numbers.
+
+| Syntax         | Meaning                                                      |
+| -------------- | ------------------------------------------------------------ |
+| `var`          | Same as `var[""]`                                            |
+| `var[1]`       | Element of `var` associated with the numerical key `1`       |
+| `var["apple"]` | Element of `var` associated with the string key `"apple"`    |
+| `&var`         | The first key with a valid value in `var` or `""` if there is none |
+| `#var`         | The last key with a valid value in `var` or `""` if there is none |
+
+Operators: like C/C++.
+
+Built-in functions: TBD
 
 
 
