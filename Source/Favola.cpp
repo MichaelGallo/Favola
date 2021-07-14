@@ -1,5 +1,6 @@
 #include <memory>
 
+#include "MainWindow.h"
 //#include "Platform.h"
 #include <QApplication>
 #include <QTranslator>
@@ -12,7 +13,7 @@ public:
 	const QString& strFileOpenArgument() const	{ return m_strFileOpenArgument; }
 
 protected:
-	bool event(QEvent* poEvent);
+//	bool event(QEvent* poEvent);
 
 private:
 	QString m_strFileOpenArgument;

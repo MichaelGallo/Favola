@@ -38,7 +38,7 @@ template<class _Mutex> class unlock_guard
 public:
 	typedef _Mutex mutex_type;
 	unlock_guard(_Mutex& _Mtx) : _MyMutex(_Mtx) { _MyMutex.unlock(); }
-	~unlock_guard() _NOEXCEPT					{ _MyMutex.lock(); }
+	~unlock_guard()								{ _MyMutex.lock(); }
 	unlock_guard(const unlock_guard&) = delete;
 	unlock_guard& operator=(const unlock_guard&) = delete;
 private:

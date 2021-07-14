@@ -66,6 +66,16 @@
     <IntDir>Temp\$(Configuration)\</IntDir>
     <OutDir>Redist\$(Configuration)\</OutDir>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\Include;$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -94,9 +104,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Common.h" />
+    <ClInclude Include="Include\LogFile.h" />
+    <ClInclude Include="Include\Platform.h" />
+    <QtMoc Include="Include\MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Favola.cpp" />
+    <ClCompile Include="Source\LogFile.cpp" />
+    <ClCompile Include="Source\MainWindow.cpp" />
+    <ClCompile Include="Source\Platform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
