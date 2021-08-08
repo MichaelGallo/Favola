@@ -1,0 +1,17 @@
+.favola parser
+	basic file structure parser
+	code parser / bytecode compiler
+game state
+	serialization
+	undo/redo
+virtual machine
+hypertext output
+	offscreen hypertext buffer
+		serialization
+		undo/redo
+	hyperlink cleanup in older paragraphs
+	restoration after undo
+	css
+	images
+	custom fonts
+action bar logic
