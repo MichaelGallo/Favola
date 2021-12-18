@@ -1,6 +1,6 @@
 # Favola
 
-Favola is an authoring system for parserless IF, somewhere between Twine and traditional IF languages like Inform or TADS. My goal was to make an IF system that's as orthogonal as possible; to provide the greatest flexibility with the fewest built-in elements. It's also aimed more at programmers, who are familiar with languages like C++ or C#.
+Favola is an authoring system for parserless IF, somewhere between Twine and traditional IF languages like Inform or TADS. My goal was to make an IF system that's as orthogonal as possible; to provide the greatest flexibility with the fewest built-in elements. It's also aimed more at programmers, who are familiar with languages like C++ or C#. Compiled Favola games are .html files with Javascript.
 
 The core concept of Favola is that of focus. One or more game objects are in focus, and their associated actions can be performed either implicitly, or explicitly by clicking on an active text. Doing so may or may not change the current focus to a different object. Each performed action represents one game turn.
 
@@ -20,24 +20,31 @@ There are no built-in concepts of rooms, items, or compass directions. In this a
 	Attributes Identifier "Name" : Parent1, Parent2, ...
 	{
 		//identifiers are *not* case sensitive
-		//objects can have child objects
-		ChildIdentifier : Parent	//the fully-qualified name will become Identifier.ChildIdentifier
+		//objects can be placed inside other objects in two different ways
+		//one is to define them within the containing object:
+		ChildObject : Parent
 		{
+			...
 		}
 	
 		Attributes @Identifier "Name"	//define a new action
 		{
-	    	Hypertext
+	    	Hypertext in either Markdown or HTML (switched using #html and #markdown directives).
+	    	This hypertext will be appended to the story when the action is performed, and all
+	    	active elements in it will be processed.
 		}
 	
 		+Identifier			//add any previously defined object or action to this object
 		-Identifier			//remove inherited action or object
+		
+		//note that objects can be in multiple parent objects at once
+		//i.e. a "sky" can be in multiple outdoor locations
 	
 		Property = "Properties are arbitrary key-value pairs"
 		
 		Function(parameter, ...)
 		{
-			//put C-like code here
+			//put Javascript code here
 			return "Return value is optional";
 		}
 	}
@@ -49,9 +56,11 @@ There are no built-in concepts of rooms, items, or compass directions. In this a
 
 An object in the game can be anything, from the player character, a room, an item, an NPC or simply an abstract container for functions. From the viewpoint of the game engine, it's something that can be in or out of focus. If it's in focus, it provides actions that can be performed.
 
+All objects are static, meaning they can't be created nor destroyed while the game is running.
+
 ### Inheritance
 
-An object can be derived from any number of existing objects by listing their comma-separated identifiers in the first line of the object definition, after a colon. For example `Auditorium : Location, Indoors` would create an object called `Auditorium` which inherits all attributes, child objects, actions, properties, and functions from two previously defined objects; `Location` and `Indoors`. If those two parent objects have some things in common, `Indoors` would override `Location`, as it's listed second.
+An object can be derived from any number of existing objects by listing their comma-separated identifiers in the first line of the object definition, after a colon. For example `Auditorium : Location, Indoors` would create an object called `Auditorium` which inherits all attributes, child objects (e.g. "ceiling"), actions, properties, and functions from two previously defined objects; `Location` and `Indoors`. If those two parent objects have some things in common, `Indoors` would override `Location`, as it's listed second.
 
 ### Object Attributes
 
@@ -79,7 +88,7 @@ Actions
 
 An action is defined by starting an identifier with an @ sign. Giving a name to the action makes it explicit by default (unless prefixed with the `Implicit` attribute). During gameplay, any named actions of the object(s) currently in focus will be shown along the bottom of the game window. Omitting a name makes the action implicit, which means it will be performed immediately when the object that owns it becomes focused. An example of an implicit action would be looking around when the player enters a new location. An action identifier is required only in order to trigger the action from hypertext, otherwise it can be omitted.
 
-For example, if there's a `@"Smell"` action defined for the object currently in focus, a clickable "Smell" text will appear in the bottom action bar. You can use this mechanism to define actions you don't want to integrate into the hypertext itself. Instead of writing "In the vase, there's a bouquet of flowers. You could try <u>smelling</u> them." you can simply write "In the vase, there's a bouquet of flowers." and add a `@"Smell flowers"` action. This way the text reads more like a normal book rather than a CYOA.
+For example, if there's a `@"Smell"` action defined for the object currently in focus, a clickable "Smell" text will appear in the bottom action bar. You can use this mechanism to define actions you don't want to integrate into the hypertext itself. Instead of writing "In the vase, there's a bouquet of flowers. You could try <u>smelling</u> them." you can simply write "In the vase, there's a bouquet of flowers." and add a `@"Smell flowers"` action. This way the text reads more like a normal book rather than a Twine game.
 
 ### Action Attributes
 
@@ -121,37 +130,7 @@ Functions can be used in active elements of action hypertext, or called from oth
 
 ### Code Syntax
 
-Code in functions has a very simple C-like syntax, with only a minimal set of keywords.
-
-| Keyword(s)           | Function                     |
-| -------------------- | ---------------------------- |
-| `if (cond) {} else {}` | Conditional execution        |
-| `for (var = value; cond; statement) {}` | For loop with a control variable |
-| `for (item : container) {}` | Iterate over all items of a container (see variables below) |
-| `while (cond) {}`      | Loop while condition is true |
-| `do {} while (cond)` | Loop while condition is true, but at least once |
-| `break`                | Unconditional jump out of a loop |
-| `continue` | Unconditional jump to the start of a loop |
-| `return exp`           | Return from function.<br />The return value is optional, and defaults to `""`. |
-| `variable = exp`       | Local variable declaration and initialization |
-| `static variable = exp` | Static (global) variable declaration and initialization |
-| `this` | The object owning the function.<br />Note that functions can be inherited, in which case `this` is the child object. |
-| `label:` | Define a label |
-| `goto label` | Unconditional jump to label |
-
-All variables created within functions are associative containers (maps). They hold key-value pairs. Both keys and values are variants, able to hold strings, 64-bit signed integers or double-precision floating point numbers.
-
-| Syntax         | Meaning                                                      |
-| -------------- | ------------------------------------------------------------ |
-| `var`          | Same as `var[""]`                                            |
-| `var[1]`       | Element of `var` associated with the numerical key `1`       |
-| `var["apple"]` | Element of `var` associated with the string key `"apple"`    |
-| `&var`         | The first key with a valid value in `var` or `""` if there is none |
-| `#var`         | The last key with a valid value in `var` or `""` if there is none |
-
-Operators: like C/C++.
-
-Built-in functions: TBD
+TBD (JavaScript)
 
 
 
@@ -170,3 +149,4 @@ Fonts: TBD.
 ## Packaged Games
 
 TBD
+

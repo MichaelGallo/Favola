@@ -1,17 +1,14 @@
+C++
+---
 .favola parser
-	basic file structure parser
-	code parser / bytecode compiler
+HTML/Javascript output
+
+HTML/Javascript
+---------------
 game state
 	serialization
 	undo/redo
-virtual machine
-hypertext output
-	offscreen hypertext buffer
-		serialization
-		undo/redo
 	hyperlink cleanup in older paragraphs
 	restoration after undo
-	css
-	images
-	custom fonts
+images
 action bar logic
